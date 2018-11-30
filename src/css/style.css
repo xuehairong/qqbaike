@@ -1,0 +1,63 @@
+html {
+    box-sizing: border-box
+}
+
+#wrapper {
+    max-width: 600px;
+    margin: 0 auto;
+    background: #F7F7F7
+}
+
+#banner {
+    height: 400px;
+    background: url(../images/banner1.png);
+    text-align: center
+}
+
+#banner .search {
+    width: 80%;
+    /* margin-top: 35%; */
+}
+
+#banner .btn {
+    border-radius: 2em;
+    padding: 1em;
+    background-color: white;
+}
+
+#banner .btn::before {
+    content: "";
+    width: .8em;
+    height: .8em;
+    display: inline-block;
+    background: url(../images/search.png)
+}
+
+ul,
+li {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+#banner .shortcut {
+    color: #FFF;
+    font-size: 1.5em;
+    opacity: .6;
+    line-height: 3em
+}
+
+#banner .shortcut span {
+    padding: .5em
+}
+
+#banner .shortcut span:not(:first-child):before {
+    content: "";
+    border-left: 1px solid #FFF;
+    border-right: 0px;
+    height: 0.4em
+}
+
+#Diseases {
+    padding: 1em
+}
