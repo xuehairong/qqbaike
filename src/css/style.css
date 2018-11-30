@@ -1,5 +1,7 @@
-html {
-    box-sizing: border-box
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 #wrapper {
@@ -16,21 +18,27 @@ html {
 
 #banner .search {
     width: 80%;
-    /* margin-top: 35%; */
+    padding-top: 15em;
+    margin: 0 auto;
 }
 
 #banner .btn {
+    width: 100%;
     border-radius: 2em;
     padding: 1em;
     background-color: white;
+    color: #C6C6C6;
+    font-size: 1.5em;
+    font-weight: bold;
 }
 
-#banner .btn::before {
-    content: "";
-    width: .8em;
-    height: .8em;
+#banner .btn span::before {
+    content: url(../images/search.png);
+    /* width: .1em;
+    height: .1em; */
     display: inline-block;
-    background: url(../images/search.png)
+    /* background: url(../images/search.png) */
+    vertical-align: middle;
 }
 
 ul,
@@ -40,18 +48,22 @@ li {
     list-style: none;
 }
 
-#banner .shortcut {
+#banner ul {
     color: #FFF;
     font-size: 1.5em;
     opacity: .6;
     line-height: 3em
 }
 
-#banner .shortcut span {
-    padding: .5em
+#banner li {
+    float: left;
 }
 
-#banner .shortcut span:not(:first-child):before {
+#banner li span {
+    padding: 0 1em;
+}
+
+#banner li:not(:first-child):before {
     content: "";
     border-left: 1px solid #FFF;
     border-right: 0px;
@@ -59,5 +71,20 @@ li {
 }
 
 #Diseases {
-    padding: 1em
+    padding: 1em;
+    background-color: white;
+    text-align: center;
+}
+
+.box {
+    border-radius: 1em;
+    margin: .5em;
+    background-color: #FDF5F1;
+}
+
+
+/* 首页第二部分 */
+
+#Diseases nav {
+    display: flex
 }
