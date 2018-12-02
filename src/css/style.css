@@ -4,31 +4,39 @@
     padding: 0;
 }
 
+html {
+    font-size: 100px;
+}
+
+body {
+    font-size: medium;
+}
+
 #wrapper {
-    max-width: 600px;
+    width: 7.5rem;
     margin: 0 auto;
     background: #F7F7F7
 }
 
 #banner {
-    height: 400px;
+    height: 4.42rem;
     background: url(../images/banner1.png);
     text-align: center
 }
 
 #banner .search {
     width: 80%;
-    padding-top: 15em;
+    padding-top: 2.5rem;
     margin: 0 auto;
 }
 
 #banner .btn {
     width: 100%;
-    border-radius: 2em;
-    padding: 1em;
+    border-radius: 1rem;
+    padding: .2rem;
     background-color: white;
     color: #C6C6C6;
-    font-size: 1.5em;
+    font-size: .25rem;
     font-weight: bold;
 }
 
@@ -76,15 +84,60 @@ li {
     text-align: center;
 }
 
-.box {
-    border-radius: 1em;
-    margin: .5em;
-    background-color: #FDF5F1;
-}
-
 
 /* 首页第二部分 */
 
 #Diseases nav {
-    display: flex
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center
+}
+
+#Diseases .box {
+    width: 2.2rem;
+    height: 1.93rem;
+    padding: 1.03rem 0 0;
+    margin: .5em;
+    background: no-repeat 50%/contain;
+}
+
+#Diseases .tumour {
+    background-image: url(../images/tumour.png)
+}
+
+#Diseases .vaccine {
+    background-image: url(../images/vaccine.png)
+}
+
+#Diseases .video {
+    background-image: url(../images/video.png)
+}
+
+#Diseases .title {
+    font-size: .28rem
+}
+
+#Diseases .content {
+    font-size: .24rem;
+    color: #999
+}
+
+.depart-list .depart-item {
+    /* padding: .5rem; */
+    width: 1.67rem;
+    height: 1.68rem;
+    font-size: .24rem;
+    margin: .03rem .06rem;
+}
+
+.depart-list .depart-item img {
+    width: .82rem;
+    height: .82rem;
+    margin: .21rem 0;
+}
+
+.disease-all {
+    color: #0ebc92;
+    font-size: .28rem;
+    padding: .34rem 0;
 }
