@@ -140,8 +140,63 @@ li {
     margin: .21rem 0;
 }
 
-.disease-all {
+.more {
     color: #0ebc92;
     font-size: .28rem;
     padding: .34rem 0;
+    text-align: center
+}
+
+
+/* 视频区域 */
+
+#videos {
+    margin-top: .2rem;
+    background-color: white
+}
+
+.videos-list .videos-item {
+    width: 4.64rem;
+}
+
+.videos-list .videos-item img {
+    width: 3.7rem;
+    height: 2.43rem;
+    border: 1rem;
+}
+
+.videos-list {
+    width: 7.5rem;
+    display: flex;
+    padding: .4rem .2rem;
+    overflow: scroll;
+}
+
+.videos-list .videos-item {
+    margin: 0 .1rem;
+}
+
+.videos-list .videos-item .title {
+    font-size: .28rem;
+    font-weight: bolder
+}
+
+.videos-list .videos-item .name {
+    font-size: .26rem;
+    line-height: .5rem;
+}
+
+.videos-list .videos-item .tag {
+    color: #b8bfc4;
+    border: solid 1px;
+    padding: 0 .1rem;
+    margin-left: .1rem;
+}
+
+
+/* 文章区域 */
+
+#articles {
+    margin-top: .2rem;
+    background-color: white
 }
