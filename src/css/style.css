@@ -20,7 +20,7 @@ body {
 
 #banner {
     height: 4.42rem;
-    background: url(../images/banner1.png);
+    background: url(../images/banner1.png) no-repeat 50%/contain;
     text-align: center
 }
 
@@ -41,12 +41,13 @@ body {
 }
 
 #banner .btn span::before {
-    content: url(../images/search.png);
-    /* width: .1em;
-    height: .1em; */
+    content: " ";
+    width: .36rem;
+    height: .36rem;
     display: inline-block;
-    /* background: url(../images/search.png) */
     vertical-align: middle;
+    margin: -.05rem .05rem 0 0;
+    background: url(../images/search.png) no-repeat 50%/contain;
 }
 
 ul,
@@ -57,29 +58,32 @@ li {
 }
 
 #banner ul {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
     color: #FFF;
-    font-size: 1.5em;
+    font-size: .24rem;
     opacity: .6;
-    line-height: 3em
+    line-height: .5rem
 }
 
 #banner li {
-    float: left;
+    /* float: left; */
 }
 
 #banner li span {
-    padding: 0 1em;
+    padding: 0 .3rem;
 }
 
 #banner li:not(:first-child):before {
     content: "";
     border-left: 1px solid #FFF;
     border-right: 0px;
-    height: 0.4em
+    height: 0.04rem
 }
 
 #Diseases {
-    padding: 1em;
+    padding: .1rem;
     background-color: white;
     text-align: center;
 }
@@ -97,7 +101,7 @@ li {
     width: 2.2rem;
     height: 1.93rem;
     padding: 1.03rem 0 0;
-    margin: .5em;
+    margin: .05rem;
     background: no-repeat 50%/contain;
 }
 
