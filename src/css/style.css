@@ -168,7 +168,7 @@ li {
 .videos-list {
     width: 7.5rem;
     display: flex;
-    padding: .4rem .2rem;
+    padding: .4rem 0 .2rem .2rem;
     overflow: scroll;
 }
 
@@ -187,9 +187,6 @@ li {
 }
 
 .videos-list .videos-item .tag {
-    color: #b8bfc4;
-    border: solid 1px;
-    padding: 0 .1rem;
     margin-left: .1rem;
 }
 
@@ -198,5 +195,93 @@ li {
 
 #articles {
     margin-top: .2rem;
-    background-color: white
+    background-color: white;
+    /* padding: 0 .4rem; */
+}
+
+#articles nav {
+    position: relative;
+    height: .9rem;
+}
+
+#articles ul {
+    display: flex;
+}
+
+#articles ul li {
+    color: #80888c;
+    font-size: .28rem;
+    text-align: center;
+    padding: .2rem 0;
+    margin: 0 .5rem;
+}
+
+#articles ul .selected {
+    font-weight: bolder;
+    color: #0ebc92;
+    border-bottom: .08rem solid #0ebc92;
+}
+
+#articles .search {
+    width: .34rem;
+    height: .34rem;
+    position: absolute;
+    top: 0;
+    bottom: .08rem;
+    right: .36rem;
+    margin: auto;
+    background: url(../images/search.png) no-repeat 50%/contain
+}
+
+#articles .articles-wrapper {
+    padding: .2rem .5rem;
+}
+
+.articles-item {
+    margin-bottom: .5rem;
+}
+
+.qa-title {
+    font-size: .34rem;
+    font-weight: bolder;
+    /* line-height: .5rem; */
+}
+
+.qa-title img {
+    width: .48rem;
+    height: .48rem;
+    vertical-align: middle;
+    margin-bottom: .07rem;
+}
+
+.qa-author {
+    margin-top: .1rem;
+    font-size: .24rem;
+    color: #b8bfc4;
+}
+
+.qa-author img {
+    width: .36rem;
+    height: .36rem;
+    vertical-align: middle;
+    margin-bottom: .02rem;
+}
+
+.qa-content {
+    margin: .2rem 0;
+    line-height: .5rem;
+    font-size: .28rem;
+    color: #848D90
+}
+
+.qa-tags {
+    font-size: .24rem
+}
+
+.tag {
+    color: #b8bfc4;
+    border: solid 1px;
+    border-radius: .05rem;
+    margin-left: 0;
+    padding: 0 .1rem;
 }
