@@ -234,7 +234,7 @@ li {
 }
 
 #articles .articles-wrapper {
-    padding: .2rem .5rem;
+    padding: .2rem .3rem;
 }
 
 .articles-item {
@@ -254,13 +254,13 @@ li {
     margin-bottom: .07rem;
 }
 
-.qa-author {
+.articles-item .author {
     margin-top: .1rem;
     font-size: .24rem;
     color: #b8bfc4;
 }
 
-.qa-author img {
+.articles-item .author img {
     width: .36rem;
     height: .36rem;
     vertical-align: middle;
@@ -274,8 +274,10 @@ li {
     color: #848D90
 }
 
-.qa-tags {
-    font-size: .24rem
+.articles-item .tag-list {
+    display: flex;
+    flex-wrap: wrap;
+    font-size: .24rem;
 }
 
 .tag {
@@ -284,4 +286,24 @@ li {
     border-radius: .05rem;
     margin-left: 0;
     padding: 0 .1rem;
+    margin: 0 .12rem .1rem 0;
+}
+
+.articles-item .paper-title {
+    font-size: .34rem;
+    margin-bottom: .2rem;
+}
+
+.articles-item .content-detail {
+    display: flex;
+}
+
+.content-detail .img {
+    margin-left: .14rem;
+}
+
+.content-detail .img img {
+    width: 2.42rem;
+    height: 1.56rem;
+    border-radius: .08rem;
 }
