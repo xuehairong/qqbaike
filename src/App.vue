@@ -1,20 +1,9 @@
-<!DOCTYPE html>
-<html lang="zh">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>腾讯医典</title>
-    <link rel="stylesheet" href="css/style.css">
-</head>
-
-<body>
-    <div id="wrapper">
-        <div id="banner">
+<template>
+  <div id="app">
+    <div id="banner">
             <!-- <input class="btn" type="button" value="搜疾病/症状/文章"> -->
             <div class="search">
-                <div class="btn"><span>搜疾病/症状/文章</span></span>
+                <div class="btn"><span>搜疾病/症状/文章</span>
                 </div>
 
                 <ul>
@@ -25,7 +14,7 @@
 
             </div>
         </div>
-        <div id="Diseases">
+    <div id="Diseases">
             <nav>
                 <div class="box tumour">
                     <p class="title">肿瘤篇</p>
@@ -107,12 +96,14 @@
         </div>
         <div id="articles">
             <nav>
-                <ul>
+                <!-- <ul>
                     <li class="selected">热门问答</li>
                     <li>前沿进展</li>
                     <li>医典精选</li>
-                </ul>
-
+                </ul> -->
+                <router-link to="/qa">热门问答</router-link>
+                <router-link to="/paper">前沿进展</router-link>
+                <router-link to="/handpick">医典精选</router-link>
                 <div class="search"></div>
             </nav>
             <div id="qa" class="articles-wrapper">
@@ -172,31 +163,27 @@
                 </div>
             </div>
         </div>
-    </div>
-    <div class="search-panel">
+  </div>
+</template>
 
-    </div>
-    <script>
-        // flexible
-        (function(document, window) {
-            var docEl = document.documentElement,
-                event = 'orientationchange' in window ? 'orientationchange' : 'resize',
-                recalc = function() {
-                    var size = 750;
-                    var zoom = docEl.clientWidth / size;
-                    // if(zoom > 1) docEl.style.fontSize = '100px';
-                    // docEl.style.fontSize = 100 * zoom + 'px';
-                    if (zoom > 1) {
-                        docEl.style.fontSize = '100px';
-                    } else {
-                        docEl.style.fontSize = 100 * zoom + 'px';
-                    }
-                };
-            if (!window.addEventListener) return;
-            window.addEventListener(event, recalc, false);
-            window.addEventListener('DOMContentLoaded', recalc, false);
-        })(document, window)
-    </script>
-</body>
+<script>
+import HelloWorld from './components/HelloWorld.vue'
 
-</html>
+export default {
+  name: 'app',
+  components: {
+    HelloWorld
+  }
+}
+
+</script>
+<style>
+/* #app {
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+  margin-top: 60px;
+} */
+</style>
