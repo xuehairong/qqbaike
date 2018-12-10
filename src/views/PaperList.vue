@@ -20,6 +20,7 @@
 export default {
     name: 'paper-list',
     data: () => ({
+        
     hotImgUrl:require('../images/hot.png'),
     authorImgUrl:require('../images/source_wicon.png')
   }),

@@ -10,7 +10,7 @@ const HandpickList = () =>
     import ('../views/HandpickList.vue')
 export function createRouter() {
     return new Router({
-        // mode: 'history',
+        mode: 'history',
         fallback: false,
         // scrollBehavior: () => ({ y: 0 }),
         routes: [{
