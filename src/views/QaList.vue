@@ -29,7 +29,7 @@ export default {
         tagList:['乳腺癌','淋巴转移','五年生存率']               
         },
         {
-        id:1,
+        id:2,
         titleImgUrl:require('../images/hot.png'),
         title:"乳腺癌伴同侧腋窝淋巴结转移，五年生存率大概多少？",
         authorImgUrl:require('../images/source_wicon.png'),
