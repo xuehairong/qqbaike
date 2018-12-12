@@ -1,5 +1,5 @@
 <template>
-    <div id="paper" class="articles-wrapper">
+    <div id="paper" class="articles-wrapper">{{type}}
         <paper-item v-for="item in PaperList" :key="item.id" :item="item"></paper-item>
                 <!-- <div class="articles-item">
                     <div class="content-detail">

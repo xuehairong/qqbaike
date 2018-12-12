@@ -94,6 +94,7 @@
                 更多视频
             </div>
         </div>
+        <div>{{count}}</div>
         <div id="articles">
             <nav>
                 <!-- <ul>
@@ -115,3 +116,16 @@
         </div>
   </div>
 </template>
+<script>
+export default {
+    data(){
+
+    },
+    computed:{
+        count(){
+            return this.$store.state.count
+        }
+    }
+}
+</script>
+
