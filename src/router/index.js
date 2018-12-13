@@ -6,6 +6,8 @@ const createPaperList = type => () =>
     import ('../views/CreatePaperListView').then(m => m.default(type))
 const QaList = () =>
     import ('../views/QaList.vue')
+const DiseaseList = () =>
+    import ('../views/DiseaseList.vue')
     // const PaperList = () =>
     //     import ('../views/PaperList.vue')
     // const HandpickList = () =>
@@ -17,7 +19,7 @@ export function createRouter() {
         // scrollBehavior: () => ({ y: 0 }),
         routes: [{
             path: '/',
-            component: QaList
+            redirect: '/qa'
         }, {
             path: '/qa',
             component: QaList
@@ -27,6 +29,6 @@ export function createRouter() {
         }, {
             path: '/handpick',
             component: createPaperList('handpick')
-        }]
+        }, { path: '/allDiseases', component: DiseaseList }]
     })
 }

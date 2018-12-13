@@ -63,9 +63,8 @@
                     <p>内科</p>
                 </div>
             </nav>
-            <div class="more">
-                全部疾病
-            </div>
+            <div class="more">全部疾病</div>
+            <!-- <router-link to="/allDiseases" tag="div" class="more">全部疾病</router-link> -->
         </div>
         <div id="videos">
             <div class="videos-list">
@@ -94,7 +93,6 @@
                 更多视频
             </div>
         </div>
-        <div>{{count}}</div>
         <div id="articles">
             <nav>
                 <!-- <ul>
@@ -116,16 +114,3 @@
         </div>
   </div>
 </template>
-<script>
-export default {
-    data(){
-
-    },
-    computed:{
-        count(){
-            return this.$store.state.count
-        }
-    }
-}
-</script>
-
