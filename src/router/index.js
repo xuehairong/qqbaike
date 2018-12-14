@@ -2,6 +2,8 @@ import Vue from 'vue'
 import Router from 'vue-router'
 Vue.use(Router)
 
+const Home = () =>
+    import ('../views/Home.vue')
 const createPaperList = type => () =>
     import ('../views/CreatePaperListView').then(m => m.default(type))
 const QaList = () =>
@@ -18,17 +20,16 @@ export function createRouter() {
         fallback: false,
         // scrollBehavior: () => ({ y: 0 }),
         routes: [{
-            path: '/',
-            redirect: '/qa'
-        }, {
-            path: '/qa',
-            component: QaList
-        }, {
-            path: '/paper',
-            component: createPaperList('paper')
-        }, {
-            path: '/handpick',
-            component: createPaperList('handpick')
-        }, { path: '/allDiseases', component: DiseaseList }]
+                path: '/',
+                component: Home,
+                children: [
+                    { path: '', component: QaList },
+                    { path: 'qa', component: QaList },
+                    { path: 'paper', component: createPaperList('paper') },
+                    { path: 'handpick', component: createPaperList('handpick') },
+                ]
+            },
+            { path: '/allDiseases', component: DiseaseList }
+        ]
     })
 }
