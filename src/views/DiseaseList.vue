@@ -3,7 +3,7 @@
     <div class="top"><span class="left-arrow"></span><span class="title">全部疾病</span> <span class="filter-btn">筛选</span></div>
     <div class="btn"><span>搜索</span></div>
     <div class="normal">
-        <div>常见疾病</div>
+        <h1>常见疾病</h1>
         <div class="normal-list">
             <div class="normal-name">抑郁症</div>
             <div class="normal-name">艾滋病</div>
@@ -22,12 +22,22 @@
             <div class="name">1型糖尿病</div>
             <div class="name">2型糖尿病</div>
         </div>
-        <div class="letter-group">
+        <div class="letter-item">
             <div class="letter">A</div>
             <div class="name">艾尔兹海默病</div>
             <div class="name">埃博拉病毒感染</div>
+            <div class="name building">爱迪生氏病<span>建设中</span></div>
         </div>
     </div>
+    <ul class="letter-bar">
+        <li>#</li>
+        <li>A</li>
+        <li>B</li>
+        <li>C</li>
+        <li>D</li>
+        <li>E</li>
+        <li>F</li>
+    </ul>
 </div>
 </template>
 <style scoped>
@@ -71,6 +81,51 @@
     width: .36rem;
     height: .36rem;
     background: url(../images/filter.png) no-repeat 50%/contain;
+}
+h1{
+    font-size: .36rem;
+    margin: .2rem 0;
+}
+.normal-list{
+    display: flex;
+    flex-wrap: wrap;
+}
+.normal-name{
+    width:2.2rem;
+    text-align: center;
+    font-size: .28rem;
+    color: #303435;
+    background: #EEF1F2;
+    padding: .15rem 0rem;
+    margin: .1rem .1rem .1rem 0;
+    border-radius: .1rem;
+}
+.letter-item{
+    margin-bottom: .8rem;
+    font-weight: 700;
+}
+.letter-item .letter{
+    font-size: .28rem;
+    color: #80888C;
+    padding: .1rem 0;
+}
+.letter-item .name{
+    font-size: .30rem;
+    padding: .2rem 0;
+}
+.letter-item .building{
+    color: #B8BFC9;
+}
+.letter-item .building span{
+    float:right;
+}
+.letter-bar{
+    position: fixed;
+    right: 0.1rem;
+    top:50%;
+    color: #80888C;
+    font-size: .28rem;
+    text-align: center;
 }
 </style>
 <script>
