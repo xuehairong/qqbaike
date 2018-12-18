@@ -1,7 +1,9 @@
 <template>
 <div class="wrapper">
-            <div id="banner">
-            <!-- <input class="btn" type="button" value="搜疾病/症状/文章"> -->
+    <div id="banner">
+            <mt-swipe :auto="4000">
+                <mt-swipe-item v-for="item in bannerList" :key="item"><img :src="item" alt=""></mt-swipe-item>
+            </mt-swipe>
             <div class="search">
                 <div class="btn"><span>搜疾病/症状/文章</span>
                 </div>
@@ -13,7 +15,7 @@
                 </ul>
 
             </div>
-        </div>
+      </div>
     <div id="Diseases">
             <nav>
                 <div class="box tumour">
@@ -66,6 +68,7 @@
 export default {
     name:'home',
     data:()=>({
+        bannerList:[require('../images/banner1.png'),require('../images/banner2.png')],
         departList:[
             {name:'心血管内科',img:require('../images/Department01.png')},
             {name:'呼吸内科',img:require('../images/Department02.png')},

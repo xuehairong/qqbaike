@@ -20,14 +20,20 @@ body {
 
 #banner {
     height: 4.42rem;
-    background: url(../images/banner1.png) no-repeat 50%/contain;
-    text-align: center
+    position: relative;
+}
+
+.mint-swipe-item img {
+    width: 7.5rem;
 }
 
 #banner .search {
-    width: 80%;
-    padding-top: 2.5rem;
-    margin: 0 auto;
+    position: absolute;
+    top: 2.42rem;
+    text-align: center;
+    left: 0;
+    right: 0;
+    margin: 0 .65rem;
 }
 
 .btn {

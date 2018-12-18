@@ -1,60 +1,70 @@
 <template>
 <div class="wrapper">
-    <div class="top"><span class="left-arrow"></span><span class="title">全部疾病</span> <span class="filter-btn">筛选</span></div>
-    <div class="btn"><span>搜索</span></div>
-    <div class="normal">
-        <h1>常见疾病</h1>
-        <div class="normal-list">
-            <div class="normal-name">抑郁症</div>
-            <div class="normal-name">艾滋病</div>
-            <div class="normal-name">肺癌</div>
-            <div class="normal-name">早泄</div>
-            <div class="normal-name">痛风</div>
-            <div class="normal-name">腰间盘突出症</div>
-            <div class="normal-name">水痘</div>
-            <div class="normal-name">诺如病毒感染</div>
-            <div class="normal-name">肾结石</div>
-        </div>
+    <div id="all-tab" class="top"><span class="left-arrow"></span><span class="title">全部疾病</span> <span class="filter-btn">筛选</span></div>
+    <div class="content">
+        <div class="btn"><span>搜索</span></div>
+            <div class="normal">
+                <h1>常见疾病</h1>
+                <div class="normal-list">
+                    <div class="normal-name">抑郁症</div>
+                    <div class="normal-name">艾滋病</div>
+                    <div class="normal-name">肺癌</div>
+                    <div class="normal-name">早泄</div>
+                    <div class="normal-name">痛风</div>
+                    <div class="normal-name">腰间盘突出症</div>
+                    <div class="normal-name">水痘</div>
+                    <div class="normal-name">诺如病毒感染</div>
+                    <div class="normal-name">肾结石</div>
+                </div>
+            </div>
+            <div class="letter-list">
+                <div class="letter-item">
+                    <div class="letter">#</div>
+                    <div class="name">1型糖尿病</div>
+                    <div class="name">2型糖尿病</div>
+                </div>
+                <div class="letter-item">
+                    <div class="letter">A</div>
+                    <div class="name">艾尔兹海默病</div>
+                    <div class="name">埃博拉病毒感染</div>
+                    <div class="name building">爱迪生氏病<span>建设中</span></div>
+                </div>
+            </div>
+            <ul class="letter-bar">
+                <li>#</li>
+                <li>A</li>
+                <li>B</li>
+                <li>C</li>
+                <li>D</li>
+                <li>E</li>
+                <li>F</li>
+            </ul>
     </div>
-    <div class="letter-list">
-        <div class="letter-item">
-            <div class="letter">#</div>
-            <div class="name">1型糖尿病</div>
-            <div class="name">2型糖尿病</div>
-        </div>
-        <div class="letter-item">
-            <div class="letter">A</div>
-            <div class="name">艾尔兹海默病</div>
-            <div class="name">埃博拉病毒感染</div>
-            <div class="name building">爱迪生氏病<span>建设中</span></div>
-        </div>
-    </div>
-    <ul class="letter-bar">
-        <li>#</li>
-        <li>A</li>
-        <li>B</li>
-        <li>C</li>
-        <li>D</li>
-        <li>E</li>
-        <li>F</li>
-    </ul>
+    
 </div>
 </template>
 <style scoped>
 .wrapper{
     background: #FCFCFC;
-    padding:0 .3rem;
 }
 .top{
-    /* position: fixed;
-    top:0; */
     position: relative;
     text-align: center;
     padding: .36rem 0;
 }
+.top.fixed{
+    position: fixed;
+    top:0;
+    left:0;
+    right: 0;
+    background: #ffff
+}
 .title{
     font-weight: bolder;
     font-size: .36rem;
+}
+.content{
+    padding:0 .3rem;
 }
 .btn{
     text-align: center;
@@ -64,7 +74,7 @@
     width:.36rem;
     height: .36rem;
     position:absolute;
-    left:0;
+    left:.3rem;
     background: url(../images/left-arrow.png) no-repeat 50%/contain;
 }
 .filter-btn{
@@ -72,15 +82,19 @@
     right: 0.36rem;
     border:solid 1px #EBEDEE;
     color: #80888C;
-    font-size: .26rem;
+    font-size: .22rem;
     font-weight: bolder;
     border-radius: 2rem;
-    padding: 0 .15rem;
+    padding: 0 .15rem 0 .41rem;
 }
 .filter-btn::before{
-    width: .36rem;
-    height: .36rem;
+    content: '';
+    width: .26rem;
+    height: .26rem;
     background: url(../images/filter.png) no-repeat 50%/contain;
+    position: absolute;
+    left: 0.15rem;
+    top:.02rem;
 }
 h1{
     font-size: .36rem;
@@ -132,6 +146,25 @@ h1{
 export default {
     name:"disease-list"
 }
+    window.onload=
+        function(){
+            let tab=document.getElementById('all-tab')
+            //     ,H = 0,
+            //     Y = tab        
+            // while (Y) {
+            //     H += Y.offsetTop; 
+            //     Y = Y.offsetParent;
+            // }
+            window.onscroll = function()
+            {
+                var s = document.body.scrollTop || document.documentElement.scrollTop
+                if(s>0) {
+                    tab.classList.add('fixed')
+                } else {
+                    tab.classList.remove('fixed')
+                }
+            };
+        }
 </script>
 
 
