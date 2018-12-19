@@ -87,24 +87,27 @@ export default {
     window.onload=
         function(){
             let bar=document.getElementById('tab-bar'),
-                H = 0,
-                Y = bar        
-            while (Y) {
-                H += Y.offsetTop; 
-                Y = Y.offsetParent;
-            }
+                H = 0
+            //    , Y = bar        
+            // while (Y) {
+            //     H += Y.offsetTop; 
+            //     Y = Y.offsetParent;
+            // }
+            // console.log('H:'+H);
+            // console.log(bar.getBoundingClientRect().top);
+            H=bar.getBoundingClientRect().top;//获取元素到视窗的高度
             window.onscroll = function()
             {
-                var s = document.body.scrollTop || document.documentElement.scrollTop
+                var s = document.body.scrollTop || document.documentElement.scrollTop//整个页面的滚动上方的高度
                 if(s>H) {
                     bar.classList.add('fixed')
                 } else {
                     bar.classList.remove('fixed')
                 }
             };
-            // bar.onclick=function(){
-            //     bar.classList.add('fixed')
-            // }
+            bar.onclick=function(){
+                bar.classList.add('fixed')
+            }
         }
         
 </script>

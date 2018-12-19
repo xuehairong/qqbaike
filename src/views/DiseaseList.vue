@@ -1,43 +1,27 @@
 <template>
 <div class="wrapper">
-    <div id="all-tab" class="top"><span class="left-arrow"></span><span class="title">全部疾病</span> <span class="filter-btn">筛选</span></div>
+    <div id="all-tab" class="top">
+        <span class="left-arrow"></span>
+    <span class="title">全部疾病</span> 
+    <span class="filter-btn">筛选</span>
+    </div>
+    <div id="letter-title"></div>
     <div class="content">
         <div class="btn"><span>搜索</span></div>
             <div class="normal">
                 <h1>常见疾病</h1>
                 <div class="normal-list">
-                    <div class="normal-name">抑郁症</div>
-                    <div class="normal-name">艾滋病</div>
-                    <div class="normal-name">肺癌</div>
-                    <div class="normal-name">早泄</div>
-                    <div class="normal-name">痛风</div>
-                    <div class="normal-name">腰间盘突出症</div>
-                    <div class="normal-name">水痘</div>
-                    <div class="normal-name">诺如病毒感染</div>
-                    <div class="normal-name">肾结石</div>
+                    <div v-for="item in normalList" class="normal-name">{{item.name}}</div>
                 </div>
             </div>
-            <div class="letter-list">
-                <div class="letter-item">
-                    <div class="letter">#</div>
-                    <div class="name">1型糖尿病</div>
-                    <div class="name">2型糖尿病</div>
-                </div>
-                <div class="letter-item">
-                    <div class="letter">A</div>
-                    <div class="name">艾尔兹海默病</div>
-                    <div class="name">埃博拉病毒感染</div>
-                    <div class="name building">爱迪生氏病<span>建设中</span></div>
+            <div class="letter-list" ref="diseaseContent">
+                <div v-for="disease in diseaseList" class="letter-item">
+                    <div class="letter">{{disease.index}}</div>
+                    <div v-for="item in disease.content" :class="{name:true,building:item.status=='building'}">{{item.name}}</div>
                 </div>
             </div>
             <ul class="letter-bar">
-                <li>#</li>
-                <li>A</li>
-                <li>B</li>
-                <li>C</li>
-                <li>D</li>
-                <li>E</li>
-                <li>F</li>
+                <li v-for="disease in diseaseList">{{disease.index}}</li>
             </ul>
     </div>
     
@@ -62,6 +46,17 @@
 .title{
     font-weight: bolder;
     font-size: .36rem;
+}
+#letter-title{
+    display: none;
+    position: fixed;
+    background: #F3F3F3;
+    color: #06BA8E;
+    padding-left: .3rem;
+    font-size: .24rem;
+    width: 100%;
+    opacity: .96;
+    text-align: left;
 }
 .content{
     padding:0 .3rem;
@@ -144,27 +139,82 @@ h1{
 </style>
 <script>
 export default {
-    name:"disease-list"
-}
-    window.onload=
-        function(){
+    name:"disease-list",
+    data:()=>({
+        normalList:[
+            {name:'抑郁症'},
+            {name:'艾滋病'},
+            {name:'肺癌'},
+            {name:'早泄'},
+            {name:'痛风'},
+            {name:'腰间盘突出症'},
+            {name:'水痘'},
+            {name:'诺如病毒感染'},
+            {name:'肾结石'}
+        ],
+        diseaseList:[
+            {index:'#',content:[
+                {name:'1型糖尿病',department:'',bodyPart:'',status:'normal'},
+                {name:'2型糖尿病',department:'',bodyPart:'',status:'normal'}
+                ]},
+            {index:'A',content:[
+                {name:'艾尔兹海默病',department:'',bodyPart:'',status:'normal'},
+                {name:'埃博拉病毒感染',department:'',bodyPart:'',status:'normal'},
+                {name:'爱整形疼痛',department:'',bodyPart:'',status:'normal'},
+                {name:'癌症',department:'',bodyPart:'',status:'normal'},
+                {name:'艾滋病',department:'',bodyPart:'',status:'normal'},
+                {name:'阿斯伯格综合征',department:'',bodyPart:'',status:'normal'},
+                {name:'爱迪生氏病',department:'',bodyPart:'',status:'building'},
+                {name:'矮小症',department:'',bodyPart:'',status:'building'}
+            ]},
+            {index:'B',content:[
+                {name:'白癜风',department:'皮肤科',bodyPart:'全身',status:'normal'},
+                {name:'白喉',department:'皮肤科',bodyPart:'',status:'normal'},
+                {name:'白化病',department:'皮肤科',bodyPart:'',status:'normal'}
+            ]} 
+        ],
+        firstSection:null,//字母区域的第一个元素
+        allSections:null,
+        allTabHeight:0
+    }),
+    mounted(){
+        this.init()
+        window.addEventListener('scroll',this.handleScroll)
+    },
+    methods:{
+        init(){
+            let listItems=this.$refs.diseaseContent.getElementsByClassName('letter-item')
+            if(listItems.length>0){
+                this.allSections=listItems;
+                this.firstSection=listItems[0];
+            }
+            this.allTabHeight=document.getElementById('all-tab').clientHeight;
+        },
+        handleScroll (){
             let tab=document.getElementById('all-tab')
-            //     ,H = 0,
-            //     Y = tab        
-            // while (Y) {
-            //     H += Y.offsetTop; 
-            //     Y = Y.offsetParent;
-            // }
-            window.onscroll = function()
-            {
-                var s = document.body.scrollTop || document.documentElement.scrollTop
-                if(s>0) {
-                    tab.classList.add('fixed')
-                } else {
-                    tab.classList.remove('fixed')
+            var s = document.body.scrollTop || document.documentElement.scrollTop
+            if(s>0) {
+                tab.classList.add('fixed')
+            } else {
+                tab.classList.remove('fixed')
+            }
+            let letterTitle=document.querySelector('#letter-title');
+            let firstSectionHeight=this.firstSection.getBoundingClientRect().top
+            // console.log(s+this.allTabHeight)
+            if(s-this.allTabHeight>firstSectionHeight){
+                letterTitle.style.display='block';
+                letterTitle.innerHTML=this.firstSection.firstElementChild.innerHTML;
+                for(let i of this.allSections){
+                    if(s-this.allTabHeight>i.getBoundingClientRect().top){
+                        letterTitle.innerHTML=i.firstElementChild.innerHTML;
+                    }
                 }
-            };
+            }else{
+                letterTitle.style.display='none';
+            }
         }
+    }
+}
 </script>
 
 
