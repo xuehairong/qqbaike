@@ -15,7 +15,7 @@
                 </div>
             </div>
             <div class="letter-list" ref="diseaseContent">
-                <div v-for="disease in diseaseList" class="letter-item">
+                <div v-for="disease in diseaseList" class="letter-item" :name="disease.index">
                     <div class="letter">{{disease.index}}</div>
                     <div v-for="item in disease.content" :class="{name:true,building:item.status=='building'}">{{item.name}}</div>
                 </div>
@@ -50,6 +50,7 @@
 #letter-title{
     display: none;
     position: fixed;
+    top:1.18rem;
     background: #F3F3F3;
     color: #06BA8E;
     padding-left: .3rem;
@@ -136,6 +137,14 @@ h1{
     font-size: .28rem;
     text-align: center;
 }
+.letter-bar .selected{
+    background: #06BA8E;
+    border-radius: 50%;
+    color: white;
+    width: .28rem;
+    height: .28rem;
+}
+
 </style>
 <script>
 export default {
@@ -201,12 +210,24 @@ export default {
             let letterTitle=document.querySelector('#letter-title');
             let firstSectionHeight=this.firstSection.getBoundingClientRect().top
             // console.log(s+this.allTabHeight)
-            if(s-this.allTabHeight>firstSectionHeight){
+            if(s-this.allTabHeight*2>firstSectionHeight){   
+                //设置第一个字母            
                 letterTitle.style.display='block';
                 letterTitle.innerHTML=this.firstSection.firstElementChild.innerHTML;
                 for(let i of this.allSections){
-                    if(s-this.allTabHeight>i.getBoundingClientRect().top){
+                    //循环遍历每滚动到一个字母就要改变显示内容
+                    // if(s-this.allTabHeight*2>i.getBoundingClientRect().top){
+                    if(i.getBoundingClientRect().top<=this.allTabHeight){
                         letterTitle.innerHTML=i.firstElementChild.innerHTML;
+                        //根据当前的字母，去设置右侧导航中的字母为选中样式
+                        let barItems= document.getElementsByClassName('letter-bar')[0].getElementsByTagName('li')
+                        for(let j of barItems){
+                            if(j.innerHTML===letterTitle.innerHTML){
+                                j.classList.add('selected')
+                            }else{
+                                j.classList.remove('selected')
+                            }
+                        }
                     }
                 }
             }else{
