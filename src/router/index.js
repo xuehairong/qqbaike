@@ -17,19 +17,21 @@ const DiseaseList = () =>
 export function createRouter() {
     return new Router({
         mode: 'history',
+        // mode: 'hash',
         fallback: false,
         // scrollBehavior: () => ({ y: 0 }),
         routes: [{
                 path: '/',
+                name: 'Home',
                 component: Home,
                 children: [
-                    { path: '', component: QaList },
-                    { path: 'qa', component: QaList },
-                    { path: 'paper', component: createPaperList('paper') },
-                    { path: 'handpick', component: createPaperList('handpick') },
+                    { path: '', name: 'qahome', component: QaList },
+                    { path: 'qa', name: 'qa', component: QaList },
+                    { path: 'paper', name: 'paper', component: createPaperList('paper') },
+                    { path: 'handpick', name: 'handpick', component: createPaperList('handpick') },
                 ]
             },
-            { path: '/allDiseases', component: DiseaseList }
+            { path: '/allDiseases', name: 'allDiseases', component: DiseaseList }
         ]
     })
 }

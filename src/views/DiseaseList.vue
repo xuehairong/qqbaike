@@ -20,7 +20,7 @@
                     <div v-for="item in disease.content" :class="{name:true,building:item.status=='building'}">{{item.name}}</div>
                 </div>
             </div>
-            <ul class="letter-bar">
+            <ul class="letter-bar"  @click="handleTouchStart">
                 <li v-for="disease in diseaseList">{{disease.index}}</li>
             </ul>
     </div>
@@ -110,9 +110,13 @@ h1{
     margin: .1rem .1rem .1rem 0;
     border-radius: .1rem;
 }
+.letter-list{
+    overflow: hidden;
+}
 .letter-item{
     margin-bottom: .8rem;
     font-weight: 700;
+    overflow:auto;
 }
 .letter-item .letter{
     font-size: .28rem;
@@ -184,7 +188,8 @@ export default {
         ],
         firstSection:null,//字母区域的第一个元素
         allSections:null,
-        allTabHeight:0
+        allTabHeight:0,
+        currentLetter:null
     }),
     mounted(){
         this.init()
@@ -202,6 +207,7 @@ export default {
         handleScroll (){
             let tab=document.getElementById('all-tab')
             var s = document.body.scrollTop || document.documentElement.scrollTop
+            console.log('当前高度:'+s);
             if(s>0) {
                 tab.classList.add('fixed')
             } else {
@@ -210,28 +216,61 @@ export default {
             let letterTitle=document.querySelector('#letter-title');
             let firstSectionHeight=this.firstSection.getBoundingClientRect().top
             // console.log(s+this.allTabHeight)
-            if(s-this.allTabHeight*2>firstSectionHeight){   
+            if(s-this.allTabHeight*2>=firstSectionHeight){   
                 //设置第一个字母            
                 letterTitle.style.display='block';
                 letterTitle.innerHTML=this.firstSection.firstElementChild.innerHTML;
                 for(let i of this.allSections){
                     //循环遍历每滚动到一个字母就要改变显示内容
                     // if(s-this.allTabHeight*2>i.getBoundingClientRect().top){
-                    if(i.getBoundingClientRect().top<=this.allTabHeight){
+                    if(i.getBoundingClientRect().top<this.allTabHeight){
                         letterTitle.innerHTML=i.firstElementChild.innerHTML;
-                        //根据当前的字母，去设置右侧导航中的字母为选中样式
-                        let barItems= document.getElementsByClassName('letter-bar')[0].getElementsByTagName('li')
-                        for(let j of barItems){
-                            if(j.innerHTML===letterTitle.innerHTML){
-                                j.classList.add('selected')
-                            }else{
-                                j.classList.remove('selected')
-                            }
-                        }
+                        this.currentLetter=letterTitle.innerHTML;
+                        this.handleBarSelcted()
                     }
                 }
             }else{
                 letterTitle.style.display='none';
+                this.currentLetter=null;
+                this.handleBarSelcted()
+            }
+        },
+        handleBarSelcted(){
+            //根据当前的字母，去设置右侧导航中的字母为选中样式
+            let barItems= document.getElementsByClassName('letter-bar')[0].getElementsByTagName('li')
+            for(let j of barItems){
+                if(j.innerHTML===this.currentLetter){
+                    j.classList.add('selected')
+                }else{
+                    j.classList.remove('selected')
+                }
+            }
+        },
+        handleTouchStart(e){
+            if(e.target.tagName==='LI'){
+                this.currentLetter=e.target.innerHTML
+                var s = document.body.scrollTop || document.documentElement.scrollTop
+                //获取需要定位到的dom
+                let targetDom=this.$refs.diseaseContent.querySelector('[name="'+this.currentLetter+'"]');   
+                //将页面滑动到需要定位的dom
+                // console.log("头部的高度："+this.allTabHeight)
+                // console.log("#的高度："+targetDom.getBoundingClientRect().top)
+                // document.body.scrollTop=document.documentElement.scrollTop=(s+targetDom.getBoundingClientRect().top-this.allTabHeight-this.allTabHeight);
+                // console.log(targetDom.offsetTop);
+                let height=this.allTabHeight;
+
+                // height=height*2;
+                if(document.getElementById('all-tab').style.position==='fixed'){
+                    height=height*2;
+                }else{
+                    height=this.allTabHeight;
+                }
+                document.body.scrollTop=document.documentElement.scrollTop=targetDom.offsetTop-height;
+                // console.log("移动前："+s)
+                
+                // console.log('移动后：'+(document.body.scrollTop || document.documentElement.scrollTop))
+                // console.log(this.$refs.diseaseContent.scrollTop);
+                this.handleScroll();
             }
         }
     }
