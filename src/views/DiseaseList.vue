@@ -234,6 +234,19 @@ export default {
                 this.currentLetter=null;
                 this.handleBarSelcted()
             }
+            // for(let i of this.allSections){
+            //         //循环遍历每滚动到一个字母就要改变显示内容
+            //         // if(s-this.allTabHeight*2>i.getBoundingClientRect().top){
+            //         if(i.getBoundingClientRect().top<this.allTabHeight){
+            //             this.currentLetter=this.firstSection.firstElementChild.innerHTML;
+            //             letterTitle.style.display='block';
+            //             letterTitle.innerHTML=this.currentLetter    
+            //         }else{
+            //             letterTitle.style.display='none';
+            //             this.currentLetter=null;
+            //         }
+            //         this.handleBarSelcted()
+            //     }
         },
         handleBarSelcted(){
             //根据当前的字母，去设置右侧导航中的字母为选中样式
@@ -259,12 +272,12 @@ export default {
                 // console.log(targetDom.offsetTop);
                 let height=this.allTabHeight;
 
-                // height=height*2;
-                if(document.getElementById('all-tab').style.position==='fixed'){
+                //  height=height*2;
+                if(!document.getElementById('all-tab').classList.contains('fixed')){
                     height=height*2;
-                }else{
-                    height=this.allTabHeight;
                 }
+                console.log(document.getElementById('all-tab'))
+                console.log(height);
                 document.body.scrollTop=document.documentElement.scrollTop=targetDom.offsetTop-height;
                 // console.log("移动前："+s)
                 
