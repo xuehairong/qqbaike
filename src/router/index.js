@@ -10,10 +10,8 @@ const QaList = () =>
     import ('../views/QaList.vue')
 const DiseaseList = () =>
     import ('../views/DiseaseList.vue')
-    // const PaperList = () =>
-    //     import ('../views/PaperList.vue')
-    // const HandpickList = () =>
-    //     import ('../views/HandpickList.vue')
+const Search = () =>
+    import ('../views/Search.vue')
 export function createRouter() {
     return new Router({
         // mode: 'history',
@@ -31,7 +29,8 @@ export function createRouter() {
                     { path: 'handpick', name: 'handpick', component: createPaperList('handpick') },
                 ]
             },
-            { path: '/allDiseases', name: 'allDiseases', component: DiseaseList }
+            { path: '/allDiseases', name: 'allDiseases', component: DiseaseList },
+            { path: '/search', name: 'search', component: Search }
         ]
     })
 }

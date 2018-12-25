@@ -5,9 +5,7 @@
                 <mt-swipe-item v-for="item in bannerList" :key="item"><img :src="item" alt=""></mt-swipe-item>
             </mt-swipe>
             <div class="search">
-                <div class="btn"><span>搜疾病/症状/文章</span>
-                </div>
-
+                <router-link to="/search" tag="div" class="btn"><span>搜疾病/症状/文章</span></router-link>
                 <ul>
                     <li><span>日常急救</span></li>
                     <li><span>腰间盘突出症</span></li>
