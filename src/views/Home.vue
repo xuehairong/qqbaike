@@ -81,34 +81,26 @@ export default {
             ],
         videoList:[
             {id:1,title:'艾滋病早就和你想的不一样了',img:require('../images/video01.jpg'),author:'汪宁',tagList:['艾滋病']},
-        ]
-    })
-}
-    window.onload=
-        function(){
-            let bar=document.getElementById('tab-bar'),
-                H = 0
-            //    , Y = bar        
-            // while (Y) {
-            //     H += Y.offsetTop; 
-            //     Y = Y.offsetParent;
-            // }
-            // console.log('H:'+H);
-            // console.log(bar.getBoundingClientRect().top);
-            H=bar.getBoundingClientRect().top;//获取元素到视窗的高度
-            window.onscroll = function()
-            {
-                var s = document.body.scrollTop || document.documentElement.scrollTop//整个页面的滚动上方的高度
-                if(s>H) {
+        ],
+        fixBarHeight:null
+    }),
+    mounted(){
+        window.scrollTo(0,0)
+        this.fixBarHeight=document.getElementById('tab-bar').getBoundingClientRect().top;//初始化元素到视窗的高度
+        window.addEventListener('scroll',this.handleScroll)
+    },
+    methods:{
+        handleScroll(){
+            let bar=document.getElementById('tab-bar');
+            let s = document.body.scrollTop || document.documentElement.scrollTop//整个页面的滚动上方的高度
+                if(s>this.fixBarHeight) {
                     bar.classList.add('fixed')
                 } else {
                     bar.classList.remove('fixed')
                 }
-            };
-            bar.onclick=function(){
-                bar.classList.add('fixed')
-            }
         }
+    }
+}
         
 </script>
 

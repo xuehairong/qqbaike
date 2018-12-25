@@ -16,8 +16,8 @@ const DiseaseList = () =>
     //     import ('../views/HandpickList.vue')
 export function createRouter() {
     return new Router({
-        mode: 'history',
-        // mode: 'hash',
+        // mode: 'history',
+        mode: 'hash',
         fallback: false,
         // scrollBehavior: () => ({ y: 0 }),
         routes: [{

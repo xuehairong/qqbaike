@@ -1,9 +1,9 @@
 <template>
 <div class="wrapper">
     <div id="all-tab" class="top">
-        <span class="left-arrow"></span>
+        <span class="left-arrow" @click="$router.go(-1)"></span>
     <span class="title">全部疾病</span> 
-    <span class="filter-btn">筛选</span>
+    <span class="filter-btn" @click="ShowfilterPopup">筛选</span>
     </div>
     <div id="letter-title"></div>
     <div class="content">
@@ -15,17 +15,38 @@
                 </div>
             </div>
             <div class="letter-list" ref="diseaseContent">
-                <div v-for="disease in diseaseList" class="letter-item" :name="disease.index">
+                <div v-for="disease in diseaseItems" class="letter-item" :name="disease.index">
                     <div class="letter">{{disease.index}}</div>
                     <div v-for="item in disease.content" :class="{name:true,building:item.status=='building'}">{{item.name}}</div>
                 </div>
             </div>
+            <div  @TouchStart="handleTouchStart">
             <ul class="letter-bar"  @click="handleTouchStart">
-                <li v-for="disease in diseaseList">{{disease.index}}</li>
+                <li v-for="disease in diseaseItems">{{disease.index}}</li>
             </ul>
+            </div>
     </div>
-    
+    <mt-popup v-model="filterPopupVisible">
+        <div class="filter">
+            <div class="filter-title">疾病筛选<i class="i-close" @click="HidefilterPopup"></i></div>
+            <div class="filter-wrapper">
+                <div class="filterByName">按首字拼音</div>
+                <ul class="filterByContent depart">
+                    <li :class="{selected:search.content==='全部疾病'}" @click="Filter('letter','全部疾病')">全部疾病</li>
+                </ul>
+                <div class="filterByName">按部位</div>
+                <ul class="filterByContent">
+                    <li v-for="part in bodyPartList" :class="{selected:search.content===part}" @click="Filter('bodypart',part)">{{part}}</li>
+                </ul>
+                <div class="filterByName">按科室</div>
+                <ul class="filterByContent depart">
+                    <li v-for="depart in departList" :class="{selected:search.content===depart}"  @click="Filter('depart',depart)">{{depart}}</li>
+                </ul>
+            </div>
+        </div>
+    </mt-popup>
 </div>
+
 </template>
 <style scoped>
 .wrapper{
@@ -148,7 +169,63 @@ h1{
     width: .28rem;
     height: .28rem;
 }
-
+.i-close{
+    background: url(../images/close.png) no-repeat 50%;
+    width: .32rem;
+    height: .32rem;
+    position:absolute;
+    top:.24rem;
+    right: .24rem;
+}
+.filter{
+    width: 6.7rem;
+    border-radius: .12rem;
+}
+.filter-title{
+    /* position: fixed; */
+    text-align: center;
+    font-weight: 700;
+    padding: .5rem;
+    font-size: .36rem;
+    letter-spacing: 2px;
+    
+}
+.filterByName{
+    color: #06BA8E;
+    font-weight: 700;
+    font-size: .36rem;
+    padding: .4rem 0 .32rem .44rem;
+}
+.filterByContent{
+    background: #F9F9F9;
+    font-size: .28rem;
+    display:flex;
+    flex-wrap: wrap;
+    padding: .08rem 0 .08rem .44rem;
+    position: relative;
+}
+.filterByContent li{
+    width: .84rem;
+    margin-right: .46rem;
+    padding: .18rem 0
+}
+.filterByContent li.selected::after{
+    content: "";
+    position: absolute;
+    width:.28rem;
+    height: .28rem;
+    background: url(../images/selected.png) no-repeat 50%;
+    background-size: 100%;
+    margin-left: .1rem;
+    margin-top: .05rem;
+}
+.filterByContent.depart li{
+    width: 1.6rem;
+}
+.filter-wrapper{
+    height: 9.5rem;
+    overflow: auto;
+}
 </style>
 <script>
 export default {
@@ -167,31 +244,65 @@ export default {
         ],
         diseaseList:[
             {index:'#',content:[
-                {name:'1型糖尿病',department:'',bodyPart:'',status:'normal'},
-                {name:'2型糖尿病',department:'',bodyPart:'',status:'normal'}
+                {name:'1型糖尿病',department:'妇科',bodyPart:'腹部',status:'normal'},
+                {name:'2型糖尿病',department:'产科',bodyPart:'腰部',status:'normal'}
                 ]},
             {index:'A',content:[
-                {name:'艾尔兹海默病',department:'',bodyPart:'',status:'normal'},
-                {name:'埃博拉病毒感染',department:'',bodyPart:'',status:'normal'},
-                {name:'爱整形疼痛',department:'',bodyPart:'',status:'normal'},
-                {name:'癌症',department:'',bodyPart:'',status:'normal'},
-                {name:'艾滋病',department:'',bodyPart:'',status:'normal'},
-                {name:'阿斯伯格综合征',department:'',bodyPart:'',status:'normal'},
-                {name:'爱迪生氏病',department:'',bodyPart:'',status:'building'},
-                {name:'矮小症',department:'',bodyPart:'',status:'building'}
+                {name:'艾尔兹海默病',department:'妇科',bodyPart:'精神',status:'normal'},
+                {name:'埃博拉病毒感染',department:'妇科',bodyPart:'全身',status:'normal'},
+                {name:'爱整形疼痛',department:'产科',bodyPart:'全身',status:'normal'},
+                {name:'癌症',department:'产科',bodyPart:'全身',status:'normal'},
+                {name:'艾滋病',department:'产科',bodyPart:'全身',status:'normal'},
+                {name:'阿斯伯格综合征',department:'儿科',bodyPart:'全身',status:'normal'},
+                {name:'爱迪生氏病',department:'儿科',bodyPart:'全身',status:'building'},
+                {name:'矮小症',department:'儿科',bodyPart:'全身',status:'building'}
             ]},
             {index:'B',content:[
-                {name:'白癜风',department:'皮肤科',bodyPart:'全身',status:'normal'},
-                {name:'白喉',department:'皮肤科',bodyPart:'',status:'normal'},
-                {name:'白化病',department:'皮肤科',bodyPart:'',status:'normal'}
+                {name:'白癜风',department:'皮肤科',bodyPart:'皮肤',status:'normal'},
+                {name:'白喉',department:'皮肤科',bodyPart:'皮肤',status:'normal'},
+                {name:'白化病',department:'皮肤科',bodyPart:'全身',status:'normal'}
             ]} 
         ],
+        bodyPartList:["头部","颈部","胸部","背部","腹部","腰部","会阴部","四肢","皮肤","骨骼","血液","精神","全身"],
+        departList:['妇科','产科','儿科','泌尿外科','内分泌科','神经内科','精神心理科','呼吸内科','骨科','血液科','消化内科','心血管内科','急诊科','肛肠外科','皮肤性病科'],
         firstSection:null,//字母区域的第一个元素
         allSections:null,
         allTabHeight:0,
-        currentLetter:null
+        currentLetter:null,
+        filterPopupVisible:false,
+        search:{type:null,content:null}
     }),
+    computed:{
+        diseaseItems(){
+            let diseaseItems=[];
+            //按科室筛选
+            if(this.search.type==='depart' &&this.search.content!==null){
+                for(let item of this.diseaseList){
+                    let newItem={}
+                    newItem.index=item.index;
+                    newItem.content=item.content.filter(c=>c.department===this.search.content)
+                    if(newItem.content.length>0){
+                        diseaseItems.push(newItem);
+                    }
+                }
+                return diseaseItems
+                //按身体部位筛选
+            }else if(this.search.type==='bodypart'  &&this.search.content!==null){
+                for(let item of this.diseaseList){
+                    let newItem={}
+                    newItem.index=item.index;
+                    newItem.content=item.content.filter(c=>c.bodyPart===this.search.content)
+                    if(newItem.content.length>0){
+                        diseaseItems.push(newItem);
+                    }
+                }
+                return diseaseItems
+            }
+            return this.diseaseList
+        }
+    },
     mounted(){
+        window.scrollTo(0,0);
         this.init()
         window.addEventListener('scroll',this.handleScroll)
     },
@@ -207,7 +318,7 @@ export default {
         handleScroll (){
             let tab=document.getElementById('all-tab')
             var s = document.body.scrollTop || document.documentElement.scrollTop
-            console.log('当前高度:'+s);
+            // console.log('当前高度:'+s);
             if(s>0) {
                 tab.classList.add('fixed')
             } else {
@@ -215,14 +326,12 @@ export default {
             }
             let letterTitle=document.querySelector('#letter-title');
             let firstSectionHeight=this.firstSection.getBoundingClientRect().top
-            // console.log(s+this.allTabHeight)
-            if(s-this.allTabHeight*2>=firstSectionHeight){   
+            if(firstSectionHeight<this.allTabHeight){   
                 //设置第一个字母            
                 letterTitle.style.display='block';
                 letterTitle.innerHTML=this.firstSection.firstElementChild.innerHTML;
                 for(let i of this.allSections){
                     //循环遍历每滚动到一个字母就要改变显示内容
-                    // if(s-this.allTabHeight*2>i.getBoundingClientRect().top){
                     if(i.getBoundingClientRect().top<this.allTabHeight){
                         letterTitle.innerHTML=i.firstElementChild.innerHTML;
                         this.currentLetter=letterTitle.innerHTML;
@@ -234,19 +343,6 @@ export default {
                 this.currentLetter=null;
                 this.handleBarSelcted()
             }
-            // for(let i of this.allSections){
-            //         //循环遍历每滚动到一个字母就要改变显示内容
-            //         // if(s-this.allTabHeight*2>i.getBoundingClientRect().top){
-            //         if(i.getBoundingClientRect().top<this.allTabHeight){
-            //             this.currentLetter=this.firstSection.firstElementChild.innerHTML;
-            //             letterTitle.style.display='block';
-            //             letterTitle.innerHTML=this.currentLetter    
-            //         }else{
-            //             letterTitle.style.display='none';
-            //             this.currentLetter=null;
-            //         }
-            //         this.handleBarSelcted()
-            //     }
         },
         handleBarSelcted(){
             //根据当前的字母，去设置右侧导航中的字母为选中样式
@@ -259,32 +355,54 @@ export default {
                 }
             }
         },
-        handleTouchStart(e){
-            if(e.target.tagName==='LI'){
-                this.currentLetter=e.target.innerHTML
-                var s = document.body.scrollTop || document.documentElement.scrollTop
-                //获取需要定位到的dom
-                let targetDom=this.$refs.diseaseContent.querySelector('[name="'+this.currentLetter+'"]');   
-                //将页面滑动到需要定位的dom
-                // console.log("头部的高度："+this.allTabHeight)
-                // console.log("#的高度："+targetDom.getBoundingClientRect().top)
-                // document.body.scrollTop=document.documentElement.scrollTop=(s+targetDom.getBoundingClientRect().top-this.allTabHeight-this.allTabHeight);
-                // console.log(targetDom.offsetTop);
-                let height=this.allTabHeight;
-
-                //  height=height*2;
-                if(!document.getElementById('all-tab').classList.contains('fixed')){
-                    height=height*2;
-                }
-                console.log(document.getElementById('all-tab'))
-                console.log(height);
-                document.body.scrollTop=document.documentElement.scrollTop=targetDom.offsetTop-height;
-                // console.log("移动前："+s)
-                
-                // console.log('移动后：'+(document.body.scrollTop || document.documentElement.scrollTop))
-                // console.log(this.$refs.diseaseContent.scrollTop);
-                this.handleScroll();
+        handleBarClick(e){
+            if(e.target.tagName!=='LI'){
+                return;
             }
+            this.scrollList(e.target.innerHTML);
+        },
+        handleTouchStart(e){
+            if(e.target.tagName!=='LI'){
+                return;
+            }
+            this.scrollList(e.target.innerHTML);
+            window.addEventListener('touchmove', this.handleTouchMove);
+            window.addEventListener('touchend', this.handleTouchEnd);
+        },
+        handleTouchMove(e){
+            e.preventDefault();
+            console.log(e.target.innerHTML);
+            // this.scrollList(e.target.innerHTML)
+        },
+        handleTouchEnd() {
+            window.removeEventListener('touchmove', this.handleTouchMove);
+            window.removeEventListener('touchend', this.handleTouchEnd);
+        },
+        scrollList(text){
+            if(!text){
+                return;
+            }
+            this.currentLetter=text
+            //获取需要定位到的dom
+            let targetDom=this.$refs.diseaseContent.querySelector('[name="'+this.currentLetter+'"]');   
+            //将页面滑动到需要定位的dom
+            let height=this.allTabHeight;
+            if(!document.getElementById('all-tab').classList.contains('fixed')){
+                height=height*2;
+            }
+            document.body.scrollTop=document.documentElement.scrollTop=targetDom.offsetTop-height;
+            this.handleScroll();
+        },
+        ShowfilterPopup(){
+            this.filterPopupVisible=true;
+        },
+        HidefilterPopup(){
+            this.filterPopupVisible=false;
+        },
+        Filter(type,name){
+            this.filterPopupVisible=false;
+            this.search.type=type;
+            this.search.content=name;
         }
     }
 }
