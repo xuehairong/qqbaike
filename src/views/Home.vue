@@ -62,6 +62,11 @@
         </div>
 </div>
 </template>
+<style lang="stylus" scoped>
+.wrapper
+    background: #F7F7F7
+</style>
+
 <script>
 export default {
     name:'home',
