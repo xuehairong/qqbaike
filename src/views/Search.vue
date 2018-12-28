@@ -2,12 +2,13 @@
     <div class="wrapper">
         <div class="search-header">
             <div class="search-input-wrapper">
-                <input id="txtSearch" @keyup="inputSearch" type="text" class="search-bar" placeholder="搜疾病/症状/文章">
-                <i v-if="isDisplaySearchTip" @click="cleanSearch" class="clean"></i>
+                <input id="txtSearch" v-model.trim="searchKey" @input="inputSearch" @keyup.enter="handlerSearch" type="text" class="search-bar" placeholder="搜疾病/症状/文章">
+                <i v-show="isDisplaySearchTip" @click="cleanSearch" class="clean"></i>
             </div>   
-            <span @click="$router.go(-1)">取消</span>
+            <span v-show="!isDisplaySearchTip" class="cancel" @click="$router.go(-1)">取消</span>
+            <span v-show="isDisplaySearchTip" class="ok">搜索</span>
         </div>
-        <div v-if="!isDisplaySearchTip" class="search-hot">
+        <div v-show="!isDisplaySearchTip" class="search-hot">
             <p class="title">热门搜索</p>
             <div class="hot-list">
                 <div class="hot-item" v-for="hot in hotSearchList">
@@ -16,18 +17,19 @@
                 </div>
             </div>
         </div>
-        <div v-if="historyList.length>0&&!isDisplaySearchTip" class="search-history">
+        <div v-show="historyList.length>0&&!isDisplaySearchTip" class="search-history">
             <p class="title">搜索历史<span class="clear" @click="DeleteHistoryAll">清除历史</span></p>
             <ul class="history-list">
-                <li v-for="h in historyList">{{h}}
-                    <i class="cancel" @click="DeleteHistory(h)"></i>
+                <li v-for="(item,index) in historyList" :key="index">{{item}}
+                    <i class="cancel" @click="DeleteHistory(index)"></i>
                 </li>
             </ul>
         </div>
-        <div v-if="isDisplaySearchTip" class="search-tip">
+        <div v-show="isDisplaySearchTip&&searchTips.length>0" class="search-tip">
+            <!-- &&searchTips.length>0 -->
             <ul>
-                <li>痛风</li>
-                <li>痛风的原因</li>
+                <searchtip-item v-for="tip in searchTips" :item="tip" :searchKey="searchKey"></searchtip-item> 
+                <!-- <li v-for="tip in searchTips">{{}}</li> -->
             </ul>
         </div>
     </div>
@@ -47,6 +49,7 @@
             padding 0 .24rem 0 .74rem
             border-radius 1rem
             input 
+                width 90%
                 height .6rem
                 font-size .28rem
                 border 0
@@ -62,6 +65,9 @@
             font-size .28rem
             margin-left .26rem
             min-width .6rem
+        .ok
+            color #01A176
+
     .title
         font-size .28rem
         color #80888C
@@ -133,20 +139,12 @@
     .search-tip
         background #FFFFFF
         padding .2rem .26rem .26rem .26rem
-        ul
-            li
-                font-size .32rem
-                padding .2rem 0
-                &::before
-                    content ''
-                    width .36rem
-                    height .36rem
-                    background url(../images/search.png) no-repeat 50%/.36rem
-                    display inline-block
-                    margin 0 .2rem -.07rem 0
+            
 </style>
 <script>
+import SearchtipItem from '../components/SearchtipItem.vue'
 export default {
+    components:{SearchtipItem},
     data:()=>({
         hotSearchList:[
             {index:1,content:'日常急救'},
@@ -156,27 +154,51 @@ export default {
             {index:5,content:'早泄'},
             {index:6,content:'痛风'},
         ],
-        historyList:['高血压','感冒','肠胃炎'],
-        isDisplaySearchTip:false
+        searchTips:["痛风","痛风的原因"],
+        historyList:[],
+        isDisplaySearchTip:false,
+        searchTimer:null,//输入搜索下拉提示间隔定时
+        searchKey:null
     }),
     methods:{
         DeleteHistoryAll(){
             this.historyList.splice(0,this.historyList.length)
         },
-        DeleteHistory(val){
-            let index=this.historyList.indexOf(val)
-            console.log(index)
-            if(index>-1){
-                this.historyList.splice(index,1);
-            }
+        DeleteHistory(index){
+            this.historyList.splice(index,1)
         },
         inputSearch(){
-            this.isDisplaySearchTip=true;
+            this.clearSearchTimer();
+            if(this.searchKey&&this.searchKey.length>0){
+                this.searchTimer=setTimeout(() => {
+                    this.showTips() 
+                }, 500);
+            }else{
+                this.showTips()
+            }
+            
+        },
+        showTips(){
+            if(!this.searchKey){
+                this.isDisplaySearchTip=false
+                // this.searchTips=[]
+                return
+            }
+
+            this.isDisplaySearchTip=true
+            
+        },
+        handlerSearch(){
+            this.historyList.push(this.searchKey)
         },
         cleanSearch(){
-            let txtSearch=document.getElementById('txtSearch')
             this.isDisplaySearchTip=false
-            txtSearch.value=''
+            this.searchKey=null
+        },
+        clearSearchTimer(){
+            if(this.searchTimer){
+                clearTimeout(this.searchTimer)
+            }
         }
     }
 }

@@ -18,6 +18,10 @@ body {
     margin: 0 auto;
 }
 
+.match {
+    color: #01a176
+}
+
 #banner {
     height: 4.42rem;
     position: relative;
