@@ -228,6 +228,7 @@ h1{
 }
 </style>
 <script>
+import {mapGetters} from 'vuex'
 export default {
     name:"disease-list",
     data:()=>({
@@ -242,27 +243,6 @@ export default {
             {name:'诺如病毒感染'},
             {name:'肾结石'}
         ],
-        diseaseList:[
-            {index:'#',content:[
-                {name:'1型糖尿病',department:'妇科',bodyPart:'腹部',status:'normal'},
-                {name:'2型糖尿病',department:'产科',bodyPart:'腰部',status:'normal'}
-                ]},
-            {index:'A',content:[
-                {name:'艾尔兹海默病',department:'妇科',bodyPart:'精神',status:'normal'},
-                {name:'埃博拉病毒感染',department:'妇科',bodyPart:'全身',status:'normal'},
-                {name:'爱整形疼痛',department:'产科',bodyPart:'全身',status:'normal'},
-                {name:'癌症',department:'产科',bodyPart:'全身',status:'normal'},
-                {name:'艾滋病',department:'产科',bodyPart:'全身',status:'normal'},
-                {name:'阿斯伯格综合征',department:'儿科',bodyPart:'全身',status:'normal'},
-                {name:'爱迪生氏病',department:'儿科',bodyPart:'全身',status:'building'},
-                {name:'矮小症',department:'儿科',bodyPart:'全身',status:'building'}
-            ]},
-            {index:'B',content:[
-                {name:'白癜风',department:'皮肤科',bodyPart:'皮肤',status:'normal'},
-                {name:'白喉',department:'皮肤科',bodyPart:'皮肤',status:'normal'},
-                {name:'白化病',department:'皮肤科',bodyPart:'全身',status:'normal'}
-            ]} 
-        ],
         bodyPartList:["头部","颈部","胸部","背部","腹部","腰部","会阴部","四肢","皮肤","骨骼","血液","精神","全身"],
         departList:['妇科','产科','儿科','泌尿外科','内分泌科','神经内科','精神心理科','呼吸内科','骨科','血液科','消化内科','心血管内科','急诊科','肛肠外科','皮肤性病科'],
         firstSection:null,//字母区域的第一个元素
@@ -273,6 +253,9 @@ export default {
         search:{type:null,content:null}
     }),
     computed:{
+        ...mapGetters({
+            diseaseList:'fetchDiseaseList'
+        }),
         diseaseItems(){
             let diseaseItems=[];
             //按科室筛选
@@ -302,7 +285,7 @@ export default {
         }
     },
     mounted(){
-        window.scrollTo(0,0);
+        // window.scrollTo(0,0);
         this.init()
         window.addEventListener('scroll',this.handleScroll)
     },

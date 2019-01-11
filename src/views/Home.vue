@@ -88,7 +88,7 @@ export default {
         fixBarHeight:null
     }),
     mounted(){
-        window.scrollTo(0,0)
+        // window.scrollTo(0,0)
         this.fixBarHeight=document.getElementById('tab-bar').getBoundingClientRect().top;//初始化元素到视窗的高度
         window.addEventListener('scroll',this.handleScroll)
     },

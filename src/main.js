@@ -16,7 +16,7 @@ Vue.config.productionTip = false
 const router = createRouter()
 const store = createStore()
     // console.log(store.state.count)
-store.commit('increment')
+    // store.commit('increment')
 
 // console.log(store.state.count)
 // console.log(store.getters.doneTodos)

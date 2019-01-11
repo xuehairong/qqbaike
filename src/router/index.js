@@ -14,10 +14,10 @@ const Search = () =>
     import ('../views/Search.vue')
 export function createRouter() {
     return new Router({
-        // mode: 'history',
-        mode: 'hash',
+        mode: 'history',
+        // mode: 'hash',
         fallback: false,
-        // scrollBehavior: () => ({ y: 0 }),
+        scrollBehavior: () => ({ y: 0 }),
         routes: [{
                 path: '/',
                 name: 'Home',
