@@ -228,34 +228,37 @@ h1{
 }
 </style>
 <script>
-import {mapGetters} from 'vuex'
+// import {mapGetters} from 'vuex'
 export default {
     name:"disease-list",
-    data:()=>({
-        normalList:[
-            {name:'抑郁症'},
-            {name:'艾滋病'},
-            {name:'肺癌'},
-            {name:'早泄'},
-            {name:'痛风'},
-            {name:'腰间盘突出症'},
-            {name:'水痘'},
-            {name:'诺如病毒感染'},
-            {name:'肾结石'}
-        ],
-        bodyPartList:["头部","颈部","胸部","背部","腹部","腰部","会阴部","四肢","皮肤","骨骼","血液","精神","全身"],
-        departList:['妇科','产科','儿科','泌尿外科','内分泌科','神经内科','精神心理科','呼吸内科','骨科','血液科','消化内科','心血管内科','急诊科','肛肠外科','皮肤性病科'],
-        firstSection:null,//字母区域的第一个元素
-        allSections:null,
-        allTabHeight:0,
-        currentLetter:null,
-        filterPopupVisible:false,
-        search:{type:null,content:null}
-    }),
+    data(){
+        return{
+            diseaseList:this.$store.getters.fetchDiseaseList,
+            normalList:[
+                {name:'抑郁症'},
+                {name:'艾滋病'},
+                {name:'肺癌'},
+                {name:'早泄'},
+                {name:'痛风'},
+                {name:'腰间盘突出症'},
+                {name:'水痘'},
+                {name:'诺如病毒感染'},
+                {name:'肾结石'}
+            ],
+            bodyPartList:["头部","颈部","胸部","背部","腹部","腰部","会阴部","四肢","皮肤","骨骼","血液","精神","全身"],
+            departList:['妇科','产科','儿科','泌尿外科','内分泌科','神经内科','精神心理科','呼吸内科','骨科','血液科','消化内科','心血管内科','急诊科','肛肠外科','皮肤性病科'],
+            firstSection:null,//字母区域的第一个元素
+            allSections:null,
+            allTabHeight:0,
+            currentLetter:null,
+            filterPopupVisible:false,
+            search:{type:null,content:null}
+        }
+    },
     computed:{
-        ...mapGetters({
-            diseaseList:'fetchDiseaseList'
-        }),
+        // ...mapGetters({
+        //     diseaseList:'fetchDiseaseList'
+        // }),
         diseaseItems(){
             let diseaseItems=[];
             //按科室筛选
@@ -284,6 +287,9 @@ export default {
             return this.diseaseList
         }
     },
+    beforeMount(){
+        this.loadItems()
+    },
     mounted(){
         // window.scrollTo(0,0);
         this.init()
@@ -297,6 +303,11 @@ export default {
                 this.firstSection=listItems[0];
             }
             this.allTabHeight=document.getElementById('all-tab').clientHeight;
+        },
+        loadItems(){
+            this.$store.dispatch('FETCH_DISEASE_LIST').then(function(){
+                this.diseaseList=this.$state.getters.fetchDiseaseList
+            })
         },
         handleScroll (){
             let tab=document.getElementById('all-tab')
